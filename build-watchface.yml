@@ -1,0 +1,36 @@
+# Сборка циферблата Redmi Watch 6
+# ВНИМАНИЕ: шаг "Build" — заглушка. Команду сборки нужно заменить на реальную
+# из документации/репозитория BandBBS или AstroBox. Без неё .bin не появится.
+
+name: Build watchface
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          # TODO: заменить на реальную команду сборки для RW6
+          echo "Build command not configured yet"
+          mkdir -p out
+          # Пример: cp path/to/built.bin out/google_pixel_watch.bin
+          # Если нужен архив (по вашему предпочтению — .zip, не .rpk):
+          # cd out && zip -r ../watchface.zip . && cd ..
+
+      - name: Check output
+        run: |
+          test -n "$(ls -A out 2>/dev/null)" || { echo "out/ is empty, build did not produce a file"; exit 1; }
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: watchface-rw6
+          path: out/
